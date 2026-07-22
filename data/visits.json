@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1784707476587-cinzxt",
+    "timestamp": "2026-07-22T08:04:36.587Z",
+    "path": "/about",
+    "ip": "127.0.0.1",
+    "userAgent": "curl/8.5.0",
+    "deviceType": "desktop",
+    "deviceModel": "Unknown",
+    "os": "Unknown",
+    "browser": "Unknown",
+    "city": "Local",
+    "region": "",
+    "country": "Local/Private IP",
+    "lat": null,
+    "lon": null
+  },
+  {
+    "id": "1784707476562-qwet3a",
+    "timestamp": "2026-07-22T08:04:36.562Z",
+    "path": "/",
+    "ip": "127.0.0.1",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15",
+    "deviceType": "mobile",
+    "deviceModel": "Apple iPhone",
+    "os": "iOS 17.0",
+    "browser": "WebKit 605.1.15",
+    "city": "Local",
+    "region": "",
+    "country": "Local/Private IP",
+    "lat": null,
+    "lon": null
+  }
+]
