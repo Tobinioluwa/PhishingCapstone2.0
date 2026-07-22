@@ -1,14 +1,10 @@
 {
   "name": "visitor-monitor",
   "version": "1.0.0",
-  "description": "Website with hidden visitor analytics dashboard (device, IP, location)",
-  "main": "server.js",
-  "type": "commonjs",
-  "scripts": {
-    "start": "node server.js"
-  },
+  "description": "Website with hidden visitor analytics dashboard (device, IP, location) — Vercel-ready",
+  "private": true,
   "dependencies": {
-    "express": "^4.19.2",
-    "ua-parser-js": "^1.0.38"
+    "ua-parser-js": "^1.0.38",
+    "@upstash/redis": "^1.34.3"
   }
 }

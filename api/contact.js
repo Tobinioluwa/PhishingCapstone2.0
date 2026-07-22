@@ -1,0 +1,42 @@
+const { logVisit } = require("./_lib/track");
+
+const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — Bright Path Consulting</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <div class="logo">Bright Path <span>Consulting</span></div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Get in Touch</h1>
+      <p>Email us at hello@brightpathconsulting.example or call (555) 010-1234. We usually reply within one business day.</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Bright Path Consulting. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>`;
+
+module.exports = async (req, res) => {
+  await logVisit(req, "/contact");
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.status(200).send(html);
+};
