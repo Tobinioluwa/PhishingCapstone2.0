@@ -12,11 +12,6 @@ const html = `<!DOCTYPE html>
   <header class="site-header">
     <div class="container nav">
       <div class="logo">Bright Path <span>Consulting</span></div>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-      </nav>
     </div>
   </header>
 
@@ -24,7 +19,7 @@ const html = `<!DOCTYPE html>
     <div class="container">
       <h1>Strategy that moves with you.</h1>
       <p>We help growing teams make clearer decisions, faster — through practical advice, not jargon.</p>
-      <a class="btn" href="/contact">Get in touch</a>
+      <a class="btn" href="mailto:hello@brightpathconsulting.example">Get in touch</a>
     </div>
   </section>
 
@@ -47,7 +42,7 @@ const html = `<!DOCTYPE html>
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; 2026 Bright Path Consulting. All rights reserved.</p>
+      <p>&copy; 2026 Bright Path Consulting. All rights reserved. <a href="/stats" class="quiet-link">·</a></p>
     </div>
   </footer>
 </body>

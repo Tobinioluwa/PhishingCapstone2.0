@@ -108,7 +108,42 @@ nav a:hover { color: var(--accent); }
   .hero h1 { font-size: 2rem; }
 }
 
+.quiet-link {
+  color: inherit;
+  opacity: 0.35;
+  text-decoration: none;
+  padding: 0 4px;
+}
+.quiet-link:hover { opacity: 0.6; }
+
 /* ---------- Dashboard ---------- */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 0 24px 24px;
+}
+
+.chart-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.chart-card h3 {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.chart-card canvas { max-height: 260px; }
+
+@media (max-width: 900px) {
+  .charts-row { grid-template-columns: 1fr; }
+}
+
 .dash-header {
   display: flex;
   justify-content: space-between;

@@ -1,8 +1,10 @@
 # Visitor Monitor — Vercel Edition
 
-Same site as before ("Bright Path Consulting" + hidden `/dashboard`), restructured to run on Vercel:
-- Pages (`/`, `/about`, `/contact`, `/dashboard`) are serverless functions in `/api`, wired up via `vercel.json` rewrites.
-- Visit data is stored in **Upstash Redis** (via the Vercel Storage Marketplace) instead of a local JSON file — Vercel's filesystem doesn't persist between requests, so the old approach wouldn't have worked here.
+Two pages, both serverless functions in `/api`, wired up via `vercel.json` rewrites:
+- `/` — the public "Bright Path Consulting" home page, with a tiny, low-contrast `·` link at the very bottom of the footer leading to `/stats`.
+- `/stats` — the stats page: summary cards, two charts (device type breakdown, visits by country via Chart.js), and a full table of every visit (time, IP, location, device, OS, browser).
+
+Visit data is stored in **Upstash Redis** (via the Vercel Storage Marketplace) instead of a local JSON file — Vercel's filesystem doesn't persist between requests, so a local-file approach wouldn't work here.
 
 ## Deploy steps
 
@@ -19,7 +21,7 @@ Same site as before ("Bright Path Consulting" + hidden `/dashboard`), restructur
 
 5. Visit your live URL:
    - `https://your-project.vercel.app/` — the public site
-   - `https://your-project.vercel.app/dashboard` — the dashboard
+   - `https://your-project.vercel.app/stats` — the stats page
 
 ## Deploying via CLI instead of GitHub
 
@@ -30,11 +32,11 @@ vercel
 ```
 Follow the prompts, then add the Upstash storage from the dashboard as in step 3 above and run `vercel --prod` again.
 
-## Restricting access to the dashboard
+## Restricting access to the stats page
 
-`/dashboard` is currently open to anyone with the URL. Before sharing the live link, you'll probably want to lock it down. A couple of easy options on Vercel:
+`/stats` is currently open to anyone with the URL. Before sharing the live link, you'll probably want to lock it down. A couple of easy options on Vercel:
 - **Vercel's built-in Password Protection** (Pro plan feature, applies to the whole deployment).
-- **Basic auth check inside `api/dashboard.js`** — I can add this for you if you'd like (just say the word), checking a username/password against an environment variable you set in Vercel.
+- **Basic auth check inside `api/insights.js`** — I can add this for you if you'd like (just say the word), checking a username/password against an environment variable you set in Vercel.
 
 ## A privacy note
 

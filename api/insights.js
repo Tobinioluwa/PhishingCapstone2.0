@@ -3,12 +3,13 @@ const html = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Visitor Dashboard</title>
+<title>Site Stats</title>
 <link rel="stylesheet" href="/style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 </head>
 <body>
   <div class="dash-header">
-    <h1>Visitor Dashboard</h1>
+    <h1>Site Stats</h1>
     <div><a href="/">&larr; Back to site</a></div>
   </div>
 
@@ -19,12 +20,22 @@ const html = `<!DOCTYPE html>
     <div class="stat-card"><div class="value" id="stat-top-device">–</div><div class="label">Top Device Type</div></div>
   </div>
 
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>Visits by Device Type</h3>
+      <canvas id="deviceChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Visits by Country</h3>
+      <canvas id="countryChart"></canvas>
+    </div>
+  </div>
+
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
           <th>Time</th>
-          <th>Page</th>
           <th>IP Address</th>
           <th>Location</th>
           <th>Device Type</th>
@@ -34,12 +45,12 @@ const html = `<!DOCTYPE html>
         </tr>
       </thead>
       <tbody id="visits-body">
-        <tr><td colspan="8">Loading…</td></tr>
+        <tr><td colspan="7">Loading…</td></tr>
       </tbody>
     </table>
   </div>
 
-  <script src="/dashboard.js"></script>
+  <script src="/insights.js"></script>
 </body>
 </html>`;
 
