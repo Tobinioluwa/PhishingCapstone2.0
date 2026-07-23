@@ -1,4 +1,4 @@
-let deviceChart, countryChart;
+let activityChart, deviceChart;
 
 const palette = ["#2f6f5e", "#c98a3e", "#7d6bab", "#c85c5c", "#4a90a4", "#a3a3a3", "#d1b04f"];
 
@@ -8,11 +8,41 @@ function escapeHtml(str) {
   }[c]));
 }
 
-function renderChart(canvasId, existingChart, labels, data, type) {
-  const ctx = document.getElementById(canvasId).getContext("2d");
-  if (existingChart) existingChart.destroy();
-  return new Chart(ctx, {
-    type,
+function renderActivityChart(labels, data) {
+  const ctx = document.getElementById("activityChart").getContext("2d");
+  if (activityChart) activityChart.destroy();
+  activityChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "Visits",
+        data,
+        borderColor: "#2f6f5e",
+        backgroundColor: "rgba(47, 111, 94, 0.12)",
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, ticks: { precision: 0 } },
+        x: { ticks: { font: { size: 10 } } },
+      },
+    },
+  });
+}
+
+function renderDeviceChart(labels, data) {
+  const ctx = document.getElementById("deviceChart").getContext("2d");
+  if (deviceChart) deviceChart.destroy();
+  if (!labels.length) return;
+  deviceChart = new Chart(ctx, {
+    type: "doughnut",
     data: {
       labels,
       datasets: [{
@@ -23,8 +53,8 @@ function renderChart(canvasId, existingChart, labels, data, type) {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: { legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 11 } } } },
-      scales: type === "bar" ? { y: { beginAtZero: true, ticks: { precision: 0 } } } : {},
     },
   });
 }
@@ -36,17 +66,21 @@ async function loadStats() {
   document.getElementById("stat-total").textContent = stats.total;
   document.getElementById("stat-unique").textContent = stats.uniqueIps;
 
-  const topCountry = Object.entries(stats.byCountry).sort((a, b) => b[1] - a[1])[0];
-  document.getElementById("stat-top-country").textContent = topCountry ? topCountry[0] : "–";
+  const todayKey = new Date().toISOString().slice(0, 10);
+  const todayEntry = stats.byDay.find((d) => d.day === todayKey);
+  document.getElementById("stat-today").textContent = todayEntry ? todayEntry.count : 0;
 
   const topDevice = Object.entries(stats.byDeviceType).sort((a, b) => b[1] - a[1])[0];
   document.getElementById("stat-top-device").textContent = topDevice ? topDevice[0] : "–";
 
-  const deviceEntries = Object.entries(stats.byDeviceType).sort((a, b) => b[1] - a[1]);
-  deviceChart = renderChart("deviceChart", deviceChart, deviceEntries.map(e => e[0]), deviceEntries.map(e => e[1]), "doughnut");
+  const dayLabels = stats.byDay.map((d) => {
+    const [, m, day] = d.day.split("-");
+    return `${m}/${day}`;
+  });
+  renderActivityChart(dayLabels, stats.byDay.map((d) => d.count));
 
-  const countryEntries = Object.entries(stats.byCountry).sort((a, b) => b[1] - a[1]).slice(0, 8);
-  countryChart = renderChart("countryChart", countryChart, countryEntries.map(e => e[0]), countryEntries.map(e => e[1]), "bar");
+  const deviceEntries = Object.entries(stats.byDeviceType).sort((a, b) => b[1] - a[1]);
+  renderDeviceChart(deviceEntries.map((e) => e[0]), deviceEntries.map((e) => e[1]));
 }
 
 async function loadVisits() {
@@ -55,20 +89,17 @@ async function loadVisits() {
   const tbody = document.getElementById("visits-body");
 
   if (!visits.length) {
-    tbody.innerHTML = `<tr><td colspan="7">No visits recorded yet.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="5">No visits recorded yet.</td></tr>`;
     return;
   }
 
   tbody.innerHTML = visits
     .map((v) => {
       const time = new Date(v.timestamp).toLocaleString();
-      const location = [v.city, v.region, v.country].filter(Boolean).join(", ");
       return `<tr>
         <td>${escapeHtml(time)}</td>
         <td>${escapeHtml(v.ip)}</td>
-        <td>${escapeHtml(location)}</td>
         <td>${escapeHtml(v.deviceType)}</td>
-        <td>${escapeHtml(v.deviceModel)}</td>
         <td>${escapeHtml(v.os)}</td>
         <td>${escapeHtml(v.browser)}</td>
       </tr>`;

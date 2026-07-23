@@ -138,7 +138,19 @@ nav a:hover { color: var(--accent); }
   font-weight: 600;
 }
 
-.chart-card canvas { max-height: 260px; }
+.chart-box {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+.chart-box canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
 
 @media (max-width: 900px) {
   .charts-row { grid-template-columns: 1fr; }
